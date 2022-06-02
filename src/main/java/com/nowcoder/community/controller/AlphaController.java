@@ -1,13 +1,14 @@
 package com.nowcoder.community.controller;
 
 import com.nowcoder.community.service.AlphaService;
+import com.nowcoder.community.util.CommunityUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -96,8 +97,8 @@ public class AlphaController {
     @RequestMapping(path = "/teacher", method = RequestMethod.GET)
     public ModelAndView getTeacher() {
         ModelAndView mav = new ModelAndView();
-        mav.addObject("name","张三");
-        mav.addObject("age",30);
+        mav.addObject("name", "张三");
+        mav.addObject("age", 30);
         mav.setViewName("demo/view");
         return mav;
     }
@@ -142,5 +143,26 @@ public class AlphaController {
         emp.put("salary", 10000.00);
         list.add(emp);
         return list;
+    }
+
+    // cookie 示例
+    @RequestMapping(path = "cookie/set", method = RequestMethod.GET)
+    @ResponseBody
+    public String setCookie(HttpServletResponse response) {
+        // 创建cookie
+        Cookie cookie = new Cookie("code", CommunityUtil.generateUUID().replace(' ', '_'));
+        // 设置cookie 生效的范围
+        cookie.setPath("/community/alpha");
+        // 设置cookie的生存时间
+        cookie.setMaxAge(60 * 10);
+        // 发送cookie
+        response.addCookie(cookie);
+        return "set cookie";
+    }
+
+    @RequestMapping(path = "cookie/get", method = RequestMethod.GET)
+    @ResponseBody
+    public String getCookie() {
+        return "get cookie";
     }
 }

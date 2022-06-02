@@ -6,3 +6,13 @@ spring:
       content-type: text/html
     cache: false
     mode: LEGACYHTML5
+  mail:
+    host: smtp.163.com
+    port: 465
+    username: coder6666@163.com
+    password: ACCHUBZPCTGQJUNZ
+    protocol: smtps
+    properties.mail.smtp:
+      auth: true
+      starttls.enable: true
+      ssl.enable: true
